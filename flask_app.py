@@ -41,7 +41,6 @@ def findSolution(w, f, t, targetHex):
         if nonceInt > 255:
             dataNonced = w + "{:04x}".format(nonceInt)
         data = dataNonced.ljust(280, '0')
-        print data
 
         block_header = ''.join(chr(int(data[i:i+2], 16)) for i in range(0, len(data), 2))
 
