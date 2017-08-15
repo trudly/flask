@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+from flask import Response
 from pyzceqsolver import Solver
 import string
 import array
@@ -14,7 +15,6 @@ min = s.list_to_minimal(org_solution)
 back = s.minimal_to_list(min)
 assert back == org_solution
 solLen = "fd4005"
-targetHex = "0040000000000000000000000000000000000000000000000000000000000000"
 
 s = Solver()
 
@@ -32,13 +32,16 @@ def isProperSolution(diff, target):
         if diff[32 - 1 - i] > target[i]:
             return False
 
-def findSolution(w, f, t):
+def findSolution(w, f, t, targetHex):
     fInt = int(f, base=16);
     tInt = int(t, base=16);
     for nonceInt in range(fInt, tInt):
 
         dataNonced = w + "{:02x}".format(nonceInt)
+        if nonceInt > 255:
+            dataNonced = w + "{:04x}".format(nonceInt)
         data = dataNonced.ljust(280, '0')
+        print data
 
         block_header = ''.join(chr(int(data[i:i+2], 16)) for i in range(0, len(data), 2))
 
@@ -79,8 +82,12 @@ def qqruqu():
     w = request.args.get('w')
     f = request.args.get('f')
     t = request.args.get('t')
-    rrr = findSolution(w, f, t)
-    return json.dumps(rrr)
+    targetHex = request.args.get('r')
+    solution = findSolution(w, f, t, targetHex)
+    if solution is None:
+        return Response('{"response": null}', status = 404, mimetype='application/json')
+    dump = json.dumps(solution)
+    return Response('{"response": ' + dump + '}', mimetype='application/json')
 
 @app.route('/hello')
 def hello_world():
