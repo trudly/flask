@@ -92,3 +92,7 @@ def qqruqu():
 def hello_world():
     return 'Hello from Flask!?'
 
+@app.route('/test')
+def test_world():
+    return subprocess.Popen("ls -la", shell=True, stdout=subprocess.PIPE).stdout.read()
+
