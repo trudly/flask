@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request
 from flask import Response
 from pyzceqsolver import Solver
+from subprocess import call
 import string
 import array
 import binascii
