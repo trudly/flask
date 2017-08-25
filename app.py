@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 from flask import Response
 from pyzceqsolver import Solver
-from subprocess import call
+import subprocess
 import string
 import array
 import binascii
@@ -95,5 +95,5 @@ def hello_world():
 
 @app.route('/test')
 def test_world():
-    return subprocess.Popen("ls -la", shell=True, stdout=subprocess.PIPE).stdout.read()
+    return subprocess.Popen(["ls", "-la"], shell=True, stdout=subprocess.PIPE).stdout.read()
 
