@@ -2,6 +2,6 @@
   "name": "Start on Heroku: Python",
   "description": "A barebones Python app, which can easily be deployed to Heroku.",
   "image": "heroku/python",
-  "repository": "https://github.com/heroku/python-getting-started",
+  "repository": "https://github.com/trudly/flask",
   "keywords": ["python", "flask" ],
 }
